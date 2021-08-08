@@ -1,0 +1,55 @@
+# singularity defintion file
+# miniconda3 
+# pip install numpy, pandas
+# contain the urbansim repo,  its req as user overlay
+# tin 2021.0808
+
+
+# build container command (req root):
+# singularity build --sandbox --fakeroot...
+# singularity build --nocolor  --quiet /global/scratch/tin/singularity-repo/miniconda3-urbansim.sif ./singularity-miniconda3.def
+
+# .github/workflows action ...
+
+# adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
+
+Bootstrap: docker
+From: continuumio/miniconda3
+
+%setup
+    touch "_ROOT_DIR_OF_CONTAINER_" ## also is "_CURRENT_DIR_CONTAINER_BUILD" 
+    date >> _ROOT_DIR_OF_CONTAINER_
+    echo "Singularity def 2021.0808.1201" >> _ROOT_DIR_OF_CONTAINER_
+    touch /.marker_file1
+    touch ${SINGULARITY_ROOTFS}/.marker_file2
+
+%environment
+    export LISTEN_PORT=12345
+    export LC_ALL=C
+
+%post
+    /opt/conda/bin/conda install jupyter -y --quiet
+    NOW=`date`
+    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+		
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    exec echo "$@"
+
+%test
+    grep -q NAME=\"Ubuntu\" /etc/os-release
+    if [ $? -eq 0 ]; then
+        echo "Container base is Ubuntu as expected."
+    else
+        echo "Container base is not Ubuntu."
+        #exit 0
+    fi
+
+%labels
+    Author tin@berkeley.edu
+    Version v0.0.1
+
+%help
+    This is a demo container for miniconda, urbansim
+

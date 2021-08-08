@@ -4,9 +4,10 @@
 # ref: https://github.com/singularityhub/github-ci/blob/master/.github/workflows/native-install.yml
 # Tin 2021.0808 WIP
 
-name: Singularity Build (native)
+name: Singularity Build native-install yml
 on: 
   push:
+
     # Edit the branches here if you want to change deploy behavior
     branches:
       - singularity-tin2021

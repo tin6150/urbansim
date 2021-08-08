@@ -1,10 +1,10 @@
 # singularity defintion file
-# miniconda3 
+# build a base rocky 8 os  (docker pull rockylinux/rockylinux)
+# add anaconda conda 
+
 # pip install numpy, pandas
 # contain the urbansim repo,  its req as user overlay
 # tin 2021.0808
-
-# dummy change
 
 
 # build container command (req root):
@@ -16,7 +16,8 @@
 # adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
 
 Bootstrap: docker
-From: continuumio/miniconda3
+From: rockylinux/rockylinux
+
 
 %setup
     touch "_ROOT_DIR_OF_CONTAINER_" ## also is "_CURRENT_DIR_CONTAINER_BUILD" 
@@ -30,7 +31,9 @@ From: continuumio/miniconda3
     export LC_ALL=C
 
 %post
-    /opt/conda/bin/conda install jupyter -y --quiet
+    yum install conda
+    #/opt/conda/bin/conda install jupyter -y --quiet
+    conda install jupyter -y --quiet
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		

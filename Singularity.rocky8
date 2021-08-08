@@ -25,6 +25,10 @@ From: rockylinux/rockylinux
     echo "Singularity def 2021.0808.1201" >> _ROOT_DIR_OF_CONTAINER_
     touch /.marker_file1
     touch ${SINGULARITY_ROOTFS}/.marker_file2
+    touch ${SINGULARITY_ROOTFS}/.singularityMarker
+    uname -a | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
+    hostname | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
+    more /etc/*release* | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
 
 %environment
     export LISTEN_PORT=12345
@@ -33,7 +37,7 @@ From: rockylinux/rockylinux
 %post
     #echo stopping for now
     #exit 0
-    yum install anaconda-core anaconda-user-help
+    yum -y install anaconda-core anaconda-user-help
     #/opt/conda/bin/conda install jupyter -y --quiet
     conda install jupyter numpy pandas -y --quiet
     NOW=`date`

@@ -36,7 +36,7 @@ From: continuumio/miniconda3
 
 %post
     /opt/conda/bin/conda install jupyter numpy pandas -y --quiet
-    pip --quiet install numpy
+    #pip --quiet install numpy
     NOW=`TZ=PST date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		

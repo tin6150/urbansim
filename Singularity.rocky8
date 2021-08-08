@@ -11,7 +11,7 @@
 # singularity build --sandbox --fakeroot...
 # singularity build --nocolor  --quiet /global/scratch/tin/singularity-repo/miniconda3-urbansim.sif ./singularity-miniconda3.def
 
-# .github/workflows action ...
+# .github/workflows buildSingularitySif.yml acts on changed *Singulairyt* files
 
 # adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
 

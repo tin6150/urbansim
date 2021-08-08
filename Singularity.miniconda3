@@ -1,7 +1,6 @@
 # singularity defintion file
 # miniconda3 
-# pip install numpy, pandas
-# contain the urbansim repo,  its req as user overlay
+# eventually contain the urbansim repo,  its req as user overlay
 # tin 2021.0808
 
 
@@ -16,6 +15,7 @@
 # adding .def to Singularity def filename would result in .def being part of the TAG
 # eg TAGNAME miniconda3 yields urbansim:miniconda3 
 
+# .github/workflows buildSingularitySif.yml acts on changed *Singulairyt* files
 
 Bootstrap: docker
 From: continuumio/miniconda3

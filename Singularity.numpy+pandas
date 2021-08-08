@@ -17,6 +17,7 @@
 # eg TAGNAME miniconda3 yields urbansim:miniconda3 
 # eg TAGNAME numpy+pandas yields urbansim.numpy+pandas
 
+# .github/workflows buildSingularitySif.yml acts on changed *Singulairyt* files
 
 Bootstrap: docker
 From: continuumio/miniconda3

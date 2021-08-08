@@ -12,7 +12,8 @@
 
 # .github/workflows action, and singularity yml tagging
 # adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
-# Singularity.TAGNAME.yml
+# Singularity.TAGNAME
+# adding .def to Singularity def filename would result in .def being part of the TAG
 # eg TAGNAME miniconda3 yields urbansim:miniconda3 
 # eg TAGNAME numpy+pandas yields urbansim.numpy+pandas
 
@@ -60,7 +61,7 @@ From: continuumio/miniconda3
     Usage:
     singularity pull oras://ghcr.io/tin6150/urbansim:miniconda3.def
     singularity shell urbansim_miniconda3.def.sif
-    singularity pull oras://ghcr.io/tin6150/urbansim:numpy+pandas.def
+    singularity pull oras://ghcr.io/tin6150/urbansim:numpy+pandas
 
 # subsequently, pip install numpy
 # will be non writable image, so ephemeral.  try to use overlay so that such install can be saved there

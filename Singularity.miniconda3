@@ -1,23 +1,24 @@
 # singularity defintion file
-# build a base rocky 8 os  (docker pull rockylinux/rockylinux)
-# add anaconda conda 
-
+# miniconda3 
 # pip install numpy, pandas
 # contain the urbansim repo,  its req as user overlay
 # tin 2021.0808
+
 
 
 # build container command (req root):
 # singularity build --sandbox --fakeroot...
 # singularity build --nocolor  --quiet /global/scratch/tin/singularity-repo/miniconda3-urbansim.sif ./singularity-miniconda3.def
 
-# .github/workflows action ...
-
+# .github/workflows action, and singularity yml tagging
 # adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
+# Singularity.TAGNAME
+# adding .def to Singularity def filename would result in .def being part of the TAG
+# eg TAGNAME miniconda3 yields urbansim:miniconda3 
+
 
 Bootstrap: docker
-From: rockylinux/rockylinux
-
+From: continuumio/miniconda3
 
 %setup
     touch "_ROOT_DIR_OF_CONTAINER_" ## also is "_CURRENT_DIR_CONTAINER_BUILD" 
@@ -31,12 +32,8 @@ From: rockylinux/rockylinux
     export LC_ALL=C
 
 %post
-    echo stopping for now
-    exit 0
-    # TODO
-    yum install conda  # not found
-    #/opt/conda/bin/conda install jupyter -y --quiet
-    conda install jupyter -y --quiet
+    /opt/conda/bin/conda install jupyter -y --quiet
+    pip install numpy
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		
@@ -59,5 +56,11 @@ From: rockylinux/rockylinux
     Version v0.0.1
 
 %help
-    This is a demo container for miniconda, urbansim
+    Work in progress.  Singularity container for Urbansim, with minconda3
+    Usage:
+    singularity pull oras://ghcr.io/tin6150/urbansim:miniconda3
+    singularity shell urbansim_miniconda3.sif
+
+# subsequently, pip install numpy
+# will be non writable image, so ephemeral.  try to use overlay so that such install can be saved there
 

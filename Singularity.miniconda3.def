@@ -4,16 +4,17 @@
 # contain the urbansim repo,  its req as user overlay
 # tin 2021.0808
 
-# dummy change
 
 
 # build container command (req root):
 # singularity build --sandbox --fakeroot...
 # singularity build --nocolor  --quiet /global/scratch/tin/singularity-repo/miniconda3-urbansim.sif ./singularity-miniconda3.def
 
-# .github/workflows action ...
-
+# .github/workflows action, and singularity yml tagging
 # adopted from https://sylabs.io/guides/3.7/user-guide/definition_files.html
+# Singularity.TAGNAME.yml
+# eg TAGNAME miniconda3 yields urbansim:miniconda3 
+
 
 Bootstrap: docker
 From: continuumio/miniconda3
@@ -31,6 +32,7 @@ From: continuumio/miniconda3
 
 %post
     /opt/conda/bin/conda install jupyter -y --quiet
+    pip install numpy
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		
@@ -53,5 +55,11 @@ From: continuumio/miniconda3
     Version v0.0.1
 
 %help
-    This is a demo container for miniconda, urbansim
+    Work in progress.  Singularity container for Urbansim, with minconda3
+    Usage:
+    singularity pull oras://ghcr.io/tin6150/urbansim:miniconda3.def
+    singularity shell urbansim_miniconda3.def.sif
+
+# subsequently, pip install numpy
+# will be non writable image, so ephemeral.  try to use overlay so that such install can be saved there
 

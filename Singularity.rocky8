@@ -30,7 +30,7 @@ From: rockylinux/rockylinux
     hostname | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
     more /etc/*release* | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
     lspci | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
-    env | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
+    env | egrep -v 'TOKEN|KEY|SECRET' | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
 
 %environment
     export LISTEN_PORT=12345
@@ -41,8 +41,8 @@ From: rockylinux/rockylinux
     #exit 0
     yum -y install anaconda-core anaconda-user-help
     #/opt/conda/bin/conda install jupyter -y --quiet
-    which pip
-    which conda ## && conda install jupyter numpy pandas -y --quiet
+    which conda || echo no conda ## && conda install jupyter numpy pandas -y --quiet
+    which pip || echo no pip
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		

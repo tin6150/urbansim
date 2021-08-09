@@ -30,7 +30,7 @@ From: rockylinux/rockylinux
     hostname | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
     more /etc/*release* | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
     lspci | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
-    env | egrep -v 'TOKEN|KEY|SECRET' | tee -a ${SINGULARITY_ROOTFS}/.singularityMarker
+    env | egrep -v 'TOKEN|KEY|SECRET' >> ${SINGULARITY_ROOTFS}/.singularityMarker
 
 %environment
     export LISTEN_PORT=12345
@@ -40,6 +40,7 @@ From: rockylinux/rockylinux
     #echo stopping for now
     #exit 0
     # should upgrade to newer version:
+    yum -y install wget curl which  tar gzip bzip2 
     [[ -f Anaconda3-4.2.0-Linux-x86_64.sh ]] || wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
     [[ -d /opt/anaconda3 ]] || bash Anaconda3-4.2.0-Linux-x86_64.sh -p /opt/anaconda3 -b     # batch mode, accept license w/o user input
 

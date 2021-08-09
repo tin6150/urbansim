@@ -41,7 +41,7 @@ From: rockylinux/rockylinux
     #exit 0
     yum -y install anaconda-core anaconda-user-help
     #/opt/conda/bin/conda install jupyter -y --quiet
-    which conda || echo no conda ## && conda install jupyter numpy pandas -y --quiet
+    which conda && conda install jupyter numpy pandas -y --quiet || echo no conda
     which pip || echo no pip
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT

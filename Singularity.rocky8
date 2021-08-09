@@ -40,13 +40,15 @@ From: rockylinux/rockylinux
     #echo stopping for now
     #exit 0
     # should upgrade to newer version:
-    yum -y install wget curl which  tar gzip bzip2 
-    [[ -f Anaconda3-4.2.0-Linux-x86_64.sh ]] || wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
+    yum --quiet -y install wget curl which  tar gzip bzip2 
+    [[ -f Anaconda3-4.2.0-Linux-x86_64.sh ]] || wget -q https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
     [[ -d /opt/anaconda3 ]] || bash Anaconda3-4.2.0-Linux-x86_64.sh -p /opt/anaconda3 -b     # batch mode, accept license w/o user input
 
     #/opt/conda/bin/conda install jupyter -y --quiet
     which conda && conda install jupyter numpy pandas -y --quiet || echo no conda
     which pip || echo no pip
+    #/opt/conda/bin/conda install jupyter -y --quiet
+    /opt/anaconda3/bin/conda install jupyter numpy pandas -y --quiet || echo ERROR running conda
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
 		

@@ -39,7 +39,10 @@ From: rockylinux/rockylinux
 %post
     #echo stopping for now
     #exit 0
-    yum -y install anaconda-core anaconda-user-help
+    # should upgrade to newer version:
+    [[ -f Anaconda3-4.2.0-Linux-x86_64.sh ]] || wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
+    [[ -d /opt/anaconda3 ]] || bash Anaconda3-4.2.0-Linux-x86_64.sh -p /opt/anaconda3 -b     # batch mode, accept license w/o user input
+
     #/opt/conda/bin/conda install jupyter -y --quiet
     which conda && conda install jupyter numpy pandas -y --quiet || echo no conda
     which pip || echo no pip

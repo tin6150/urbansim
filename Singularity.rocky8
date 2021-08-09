@@ -22,7 +22,7 @@ From: rockylinux/rockylinux
 %setup
     touch "_ROOT_DIR_OF_CONTAINER_" ## also is "_CURRENT_DIR_CONTAINER_BUILD" 
     date >> _ROOT_DIR_OF_CONTAINER_
-    echo "Singularity def 2021.0808.1201" >> _ROOT_DIR_OF_CONTAINER_
+    echo "Singularity def 2021.0808.1901" >> _ROOT_DIR_OF_CONTAINER_
     touch /.marker_file1
     touch ${SINGULARITY_ROOTFS}/.marker_file2
     touch ${SINGULARITY_ROOTFS}/.singularityMarker
@@ -44,6 +44,7 @@ From: rockylinux/rockylinux
     [[ -f Anaconda3-4.2.0-Linux-x86_64.sh ]] || wget -q https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
     [[ -d /opt/anaconda3 ]] || bash Anaconda3-4.2.0-Linux-x86_64.sh -p /opt/anaconda3 -b     # batch mode, accept license w/o user input
 
+    ## ++ FIXME: find the conda env setup .sh and source it.
     #/opt/conda/bin/conda install jupyter -y --quiet
     which conda && conda install jupyter numpy pandas -y --quiet || echo no conda
     which pip || echo no pip
@@ -57,6 +58,7 @@ From: rockylinux/rockylinux
     echo "Arguments received: $*"
     exec echo "$@"
 
+## FIXME: change to a better test for conda presense
 %test
     grep -q NAME=\"Ubuntu\" /etc/os-release
     if [ $? -eq 0 ]; then
@@ -68,7 +70,7 @@ From: rockylinux/rockylinux
 
 %labels
     Author tin@berkeley.edu
-    Version v0.0.1
+    Version v0.0.2
 
 %help
     Work in progress.  Singularity container for Urbansim, with minconda3
@@ -76,7 +78,8 @@ From: rockylinux/rockylinux
     singularity pull oras://ghcr.io/tin6150/urbansim:rocky8
     singularity shell urbansim_rocky8.sif
 
-# subsequently, pip install numpy
-# will be non writable image, so ephemeral.  try to use overlay so that such install can be saved there
+# subsequently, conda install  any other req 
+# will be non writable image, so ephemeral or fails.  
+# try to use overlay so that such install can be saved there
 
 
